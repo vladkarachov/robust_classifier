@@ -44,10 +44,6 @@ class SmallCNN(nn.Module):
         nn.init.constant_(self.classifier.fc3.bias, 0)
 
     def forward(self, input):
-        print(input.shape)
         features = self.feature_extractor(input)
-        print(features.shape)
-        print(features.view(-1, 64 * 4 * 4).shape)
         logits = self.classifier(features.view(-1, 64 * 5 * 5))
-        print(logits.shape)
         return logits
