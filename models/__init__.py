@@ -1,5 +1,5 @@
 from . import wideresnet
 
 __all__ = [
-    'wideresnet',
+    'wideresnet', 'small_cnn', 'trades', 'relaxation'
 ]
