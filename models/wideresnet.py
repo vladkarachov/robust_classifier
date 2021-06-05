@@ -8,11 +8,11 @@ class BasicBlock(nn.Module):
     def __init__(self, in_planes, out_planes, stride, activation=nn.ReLU, dropRate=0.0):
         super(BasicBlock, self).__init__()
         self.bn1 = nn.BatchNorm2d(in_planes)
-        self.relu1 = activation(inplace=True)
+        self.relu1 = activation
         self.conv1 = nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
                                padding=1, bias=False)
         self.bn2 = nn.BatchNorm2d(out_planes)
-        self.relu2 = activation(inplace=True)
+        self.relu2 = activation
         self.conv2 = nn.Conv2d(out_planes, out_planes, kernel_size=3, stride=1,
                                padding=1, bias=False)
         self.droprate = dropRate
@@ -49,7 +49,7 @@ class NetworkBlock(nn.Module):
 
 
 class WideResNet(nn.Module):
-    def __init__(self, activation=nn.ReLU, depth=34, num_classes=10, widen_factor=10, dropRate=0.0):
+    def __init__(self, activation=nn.ReLU(inplace=True), depth=34, num_classes=10, widen_factor=10, dropRate=0.0):
         super(WideResNet, self).__init__()
         nChannels = [16, 16 * widen_factor, 32 * widen_factor, 64 * widen_factor]
         assert ((depth - 4) % 6 == 0)
@@ -68,7 +68,7 @@ class WideResNet(nn.Module):
         self.block3 = NetworkBlock(n, nChannels[2], nChannels[3], block, 2, activation, dropRate)
         # global average pooling and classifier
         self.bn1 = nn.BatchNorm2d(nChannels[3])
-        self.relu = activation(inplace=True)
+        self.relu = activation
         self.fc = nn.Linear(nChannels[3], num_classes)
         self.nChannels = nChannels[3]
 

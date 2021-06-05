@@ -1,5 +1,5 @@
 import torch
-from trades import trades_loss
+from models.trades import trades_loss
 import torch.nn.functional as F
 
 def train(model, device, train_loader, optimizer, epoch, step_size, epsilon, num_steps, beta):
